@@ -32,14 +32,3 @@ module "gcloud-upsert" {
     EOT
   create_cmd_triggers   = { uuid = uuid() }
 }
-
-module "gcloud-destroy" {
-  source = "terraform-google-modules/gcloud/google"
-
-  platform              = "linux"
-  gcloud_sdk_version    = "325.0.0"
-  additional_components = ["beta"]
-
-  destroy_cmd_entrypoint = abspath("${path.module}/scripts/delete-script.sh")
-  destroy_cmd_body       = "${var.project_id} ${jsonencode(var.policy_id)}"
-}
